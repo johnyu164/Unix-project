@@ -1,0 +1,3 @@
+google 搜尋網頁下路徑  site: (url)   "target"
+https://code.google.com/p/pygoogle/ pygoogle/
+http://stackoverflow.com/questions/7746832/scraping-and-parsing-google-search-results-using-python
