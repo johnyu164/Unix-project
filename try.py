@@ -10,5 +10,6 @@ except:
     
 soup = BeautifulSoup(page.read()) 
  
-print soup.find_all('a')
-
+for word in soup.find_all('a'):
+    print(word.getText())
+    print(word.get('href'))
