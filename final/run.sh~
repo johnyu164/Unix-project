@@ -1,0 +1,1 @@
+python googlesearch.py && python simularity.py && python fixtext.py 

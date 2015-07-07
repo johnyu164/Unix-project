@@ -2,3 +2,5 @@ http://programmermagazine.github.io/201309/htm/article2.html
 http://stackoverflow.com/questions/9893175/google-text-to-speech-api
 google text to speech
 https://pypi.python.org/pypi/SpeechRecognition/
+
+http://alexsleat.co.uk/2011/11/14/python-making-use-of-googles-text-to-speech-translation-tool/

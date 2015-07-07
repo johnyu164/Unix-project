@@ -1,22 +1,15 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
-# 作業系統
 import os
 import sys
-
-# 字碼轉換
 import codecs
-
-# 科學運算
 import numpy as np
 import numpy.linalg as LA
-
-# 文字處理
 import nltk
 from nltk.corpus import stopwords
 
-# 移除中文停詞
+# 移除停詞介係詞
 def removeChineseStopWords(textFile):
 	newTextFile = textFile
 
@@ -46,12 +39,11 @@ def getTokensFromFile(textFileName):
 def getTokenFreqList(textTokens):
 	tokenFrequency = nltk.FreqDist(textTokens)
 
-	# 刪除單一字
+
 	for word in tokenFrequency.keys():
 		if len(word) == 1:
 			tokenFrequency.pop(word)
 
-	# 刪除數字
 	for word in tokenFrequency.keys():
 		try:
 			val = float(word)
@@ -59,29 +51,28 @@ def getTokenFreqList(textTokens):
 		except:
 			pass
 
-	# 刪除廢詞
 	chineseFilter = [u'可能', u'不過', u'如果', u'恐怕', u'其實', u'進入', u'雖然', u'這麼',
 			 u'處於', u'因為', u'一定']
 
-	for word in tokenFrequency:
+	for word in tokenFrequency.keys():
 		if word in chineseFilter:
 			tokenFrequency.pop(word)
 
 	return tokenFrequency
 
-# 輸出字詞頻度表
+
 def OutputDocWordFreq(wordFrequency):
 	for word in wordFrequency:
 		print '"%s",%d' % (word, wordFrequency[word])
+                
 
-# 計算 2 向量間距離
 def getDocDistance(a, b):
 	if LA.norm(a)==0 or LA.norm(b)==0:
 		return -1
 
 	return round(np.inner(a, b) / (LA.norm(a) * LA.norm(b)), 4)
 
-# 計算文件相似度    
+# 計算相似度    
 def getDocSimilarity(wordFrequencyPair, minTimes=1):
 	dict1 = {}
 	for key in wordFrequencyPair[0].keys():
@@ -102,14 +93,14 @@ def getDocSimilarity(wordFrequencyPair, minTimes=1):
 			dict2[key] = 0
         
 	v1 = []
-		for w in sorted(dict1.keys()):
-			v1.append(dict1.get(w))
-	print "(1)", w, dict1.get(w)
+	for w in sorted(dict1.keys()):
+		v1.append(dict1.get(w))
+	#print "(1)", w, dict1.get(w)
 
 	v2 = []    
 	for w in sorted(dict2.keys()):
 		v2.append(dict2.get(w))
-			print "(2)", w, dict2.get(w)
+	#print "(2)", w, dict2.get(w)
 
 	result = 0
 
@@ -120,19 +111,20 @@ def getDocSimilarity(wordFrequencyPair, minTimes=1):
 
 	return result
 
-# 主程式
-#if __name__=="__main__":
-#    if len(sys.argv) < 2:
-#        print(u'需要輸入 2 份文件')
-#        exit()
-    
-trainFileName = '111.txt'
-trainTokens = getTokensFromFile(trainFileName)
-trainTokenFrequency = getTokenFreqList(trainTokens)
 
-testFileName = '222.txt'
-testTokens = getTokensFromFile(testFileName)
-testTokenFrequency = getTokenFreqList(testTokens)
+def runsim():   
+	trainFileName = '111.txt'
+	trainTokens = getTokensFromFile(trainFileName)
+	trainTokenFrequency = getTokenFreqList(trainTokens)
 
-wordFrequencyPair = [trainTokenFrequency, testTokenFrequency]
-print getDocSimilarity(wordFrequencyPair, 1)
+	testFileName = '222.txt'
+	testTokens = getTokensFromFile(testFileName)
+	testTokenFrequency = getTokenFreqList(testTokens)
+
+	wordFrequencyPair = [trainTokenFrequency, testTokenFrequency]
+
+	#print '新聞相似度'
+	temp = float(getDocSimilarity(wordFrequencyPair, 1))
+	print temp
+	return temp
+
